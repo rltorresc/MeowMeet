@@ -1,0 +1,23 @@
+<main class="max-w-lg mx-auto border-solid border-2 border-black p-10 rounded-lg flex-grow bg-[#FCD9A3]">
+    <div class="relative">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-700 border-solid border-2 border-black">
+            <h1 class="text-2xl mb-5 font-bold">Perfil de <%=current_user.user_name%></h1>
+            
+            <thead class="text-xs text-gray-800 uppercase bg-orange-100">
+                <tr class="border-b border-black">
+                    <th scope="col" class="px-6 py-3">Dispositivo</th>
+                    <th scope="col" class="px-6 py-3">Sesión</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @sessions.each do |sessions|%>
+                    <tr class="bg-orange-100 border-b border-gray-700">
+                        <td class="px-6 py-4"><%=sessions.device%></td>
+                        <td class="px-6 py-4"><%= button_to "Cerrar sesión", sessions_path(sessions.id), method: :delete, class: "text-white bg-black hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 inline-block" %></td>
+                    </tr>
+                <% end %>
+            </tbody>
+            
+        </table>
+    </div>
+</main>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MeowMeet</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= favicon_link_tag asset_path('logo.png')%>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body class="bg-orange-100 overflow-x-hidden ">
+    <nav class="flex justify-between bg-[#FCD9A3] p-3 border-b border-black">
+      <div class="flex items-center">
+        <img src="<%= image_path('logo2.svg') %>" class="w-12 h-auto" alt="Logo">
+        <a href="/" class="text-black text-2xl font-bold ml-5">MeowMeet</a>
+      </div>
+      <div class="flex items-center">
+        <% if current_user.nil? %>
+          <%= link_to 'Sign Up', new_user_path, class: "text-white bg-black hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 inline-block" %>
+          <%= link_to 'Sign In', new_session_path, class: "text-white bg-black hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 inline-block" %>
+        <% else %>
+          <%= link_to user_path(current_user) ,class: "text-white bg-black hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 inline-block h-10" do %>
+          <%= image_tag("user.svg", class: "inline-block mr-2 w-5")%>
+          <%= current_user.user_name %>
+          <% end %>
+          <%= link_to 'Sign Out', href="/sessions/destroy", data: {"turbo-method": :delete}, class: "text-white bg-black hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 inline-block h-10" %>
+        <% end %>
+      </div>
+    </nav>
+    <%= render partial: "shared/notifications", locals: { message: flash[:alert]}%>
+    <main class="container mx-auto mt-28 px-5 flex">
+      <%= yield %>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+  </body>
+</html>

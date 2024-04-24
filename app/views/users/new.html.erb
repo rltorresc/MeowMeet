@@ -1,0 +1,14 @@
+<main class="max-w-lg mx-auto border-solid border-2 border-black p-10 rounded-lg flex-grow bg-[#FCD9A3]">
+  <%= form_with model: @user do |form| %>
+  <h1 class="text-2xl mb-5 font-bold">Sign Up</h1>
+  <div class="mb-5">
+  <label for="user_name" class="block mb-2 text-sm font-medium text-gray-900">Your user</label>
+  <%= form.text_field :user_name, class: "bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5", placeholder: "user"%>
+  </div>
+  <div class="mb-5">
+  <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Your password</label>
+  <%= form.password_field :password, class: "bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5", placeholder: "password" %>
+  </div>
+  <%= form.submit "Create new account", class: "text-white bg-black hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center" %>
+<% end %>
+</main>

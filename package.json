@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@stimulus-components/notification": "^3.0.0",
+    "stimulus-notification": "^2.2.0"
+  }
+}
