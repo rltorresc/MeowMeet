@@ -1,0 +1,45 @@
+<main class="columns-3xs max-w-5xl w-full flex justify-around flex-wrap mx-auto border-solid border-2 border-black p-10 rounded-lg flex-grow bg-[#B9AC99]">
+  <section>
+    <div class="centered-box">
+      <%= form_for @cat do |f| %>
+        <h1><%= mytitle %></h1>
+          <label for="name", class="block mb-2 text-sm font-medium text-gray-900">Name</label>
+          <%= f.text_field :name, class: "bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5"%>
+          <br>
+          <label for="birth_date", class="block mb-2 text-sm font-medium text-gray-900">Birth Date</label>
+          <%= f.date_field :birth_date, class: "bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5"%>
+          <br>
+          <label for="color", class="block mb-2 text-sm font-medium text-gray-900">Color</label>
+          <select id="color" name="cat[color]", class= "bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5">
+              <option disable selected>-- Please Select --</option>
+              <% Cat::CAT_COLOR.each do |color|%>
+                <option
+                  <%= @cat.color == color ? "selected" : "" %>
+                  value="<%= color %>">
+                  <%= color.upcase %>
+                </option>
+              <% end %>
+          </select>
+          <br>
+          <div class="mb-4">
+            <label for="sex" class="block mb-2 text-sm font-medium text-gray-900">Sex</label>
+            <div class="flex items-center space-x-4">
+              <label class="inline-flex items-center">
+                <%= f.radio_button :sex, 'M', class: "text-blue-600 focus:ring-blue-500 border-gray-300" %>
+                <span class="ml-2 text-gray-900">M</span>
+              </label>
+              <label class="inline-flex items-center">
+                <%= f.radio_button :sex, 'F', class: "text-pink-600 focus:ring-pink-500 border-gray-300" %>
+                <span class="ml-2 text-gray-900">F</span>
+              </label>
+            </div>
+          </div>
+          <label for="description", class="block mb-2 text-sm font-medium text-gray-900">Description</label>
+          <%= f.text_area :description, class: "bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5"%>
+          <br>
+          <%= f.submit @cat.new_record?? 
+          "Add a cat" : "Update a cat", class: "text-white bg-black hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 inline-block" %>
+      <%end%>
+    </div>
+  </section>
+</main>

@@ -28,7 +28,7 @@
           <%= link_to 'Sign Out', href="/sessions/destroy", data: {"turbo-method": :delete}, class: "text-white bg-black hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 inline-block h-10" %>
         <% end %>
       </div>
-    </nav>
+    </nav> 
     <%= render partial: "shared/notifications", locals: { message: flash[:alert]}%>
     <main class="container mx-auto mt-28 px-5 flex">
       <%= yield %>

@@ -6,6 +6,23 @@ class User < ApplicationRecord
 
     after_initialize :ensure_session_token
 
+    has_many :cats,
+        primary_key: :id,
+        foreign_key: :user_id,
+        class_name: :Cat
+
+    has_many :rental_requests,
+        primary_key: :id,
+        foreign_key: :user_id,
+        class_name: :CatRentalRequest
+
+    has_many :sessions,
+        primary_key: :id,
+        foreign_key: :user_id,
+        class_name: :Session
+
+    attr_reader :password
+
     attr_reader :password
     
     #This method will find a user by their credentials

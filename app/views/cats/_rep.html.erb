@@ -1,0 +1,17 @@
+<tr class="bg-white border-b">
+  <td class="px-6 py-3"><%= req.requester ? req.requester.user_name : "No data"%></td>
+  <td class="px-6 py-3"><%= req.start_date %></td>
+  <td class="px-6 py-3"><%= req.end_date %></td>
+  <td class="px-6 py-3">
+    <% if req.pending? && current_user && current_user.cats.include?(req.cat) %>
+      <form action="<%= approve_cat_rental_request_url(req) %>" method="post">
+        <input type="submit" value="Approve", class="cursor-pointer text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 inline-block">
+      </form>
+      <form action="<%= deny_cat_rental_request_url(req) %>" method="post">
+        <input type="submit" value="Deny", class="cursor-pointer text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-2 inline-block">
+      </form>
+    <% else %>
+      <%= req.status %>
+    <% end %>
+  </td>
+</tr>

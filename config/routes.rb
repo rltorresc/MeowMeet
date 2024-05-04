@@ -8,5 +8,13 @@ Rails.application.routes.draw do
   resources :users, only: [:new , :create, :show]
   # Defines the root path route ("/")
   # root "posts#index"
-  resources :cats
+  resources :cats, except:[:destroy] do
+    resources :cat_rental_requests, only: [:new]
+  end
+  resources :cat_rental_requests, only: [:new, :create] do
+    member do
+      post 'approve'
+      post 'deny'
+    end
+  end
 end

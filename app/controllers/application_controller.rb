@@ -43,3 +43,11 @@ def device_info
     user_agent = UserAgent.parse(request.env["HTTP_USER_AGENT"])
     @device_info = user_agent.platform  + " - " + user_agent.browser
 end
+#Comprobar si el usuario es el propietario del gato
+def check_owner
+    @cat = Cat.find(params[:id])
+    
+    unless @cat.user_id == current_user.id 
+        redirect_to cat_url(@cat), flash: { alert:  "You are not the owner of this cat" }
+    end
+end

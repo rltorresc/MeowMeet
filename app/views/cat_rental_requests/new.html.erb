@@ -1,0 +1,31 @@
+<main class="columns-3xs max-w-5xl w-full flex justify-around flex-wrap mx-auto border-solid border-2 border-black p-10 rounded-lg flex-grow bg-[#B9AC99]">
+ <div class="">
+    <h1 class="text-black text-2xl font-bold ml-4 mb-5">Create Rental Request</h1>
+
+  <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Select a cat</label>
+  <%= form_for @rental_request do |f| %>
+      <select name="cat_rental_request[cat_id]"
+              id="cat_rental_request_cat_id"
+              required,
+              class= "bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5"
+              >
+        <option selected disabled>--Select Cat--</option>
+        <% Cat.all.each do |cat| %>
+          <% selected = @rental_request.cat_id == cat.id %>
+          <option <%= selected ? "selected" : "" %>
+                  value="<%= cat.id %>">
+            <%= cat.name %>
+          </option>
+        <% end %>
+      </select>
+      <br>
+      <label for="start_date" class="block mb-2 text-sm font-medium text-gray-900">Start Date</label>
+      <%= f.date_field :start_date, class: "bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5" %>
+      <br>
+      <label for="end_date" class="block mb-2 text-sm font-medium text-gray-900">End Date</label>
+      <%= f.date_field :end_date, class: "bg-gray-50 border border-black text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5" %>
+      <br>
+      <%= f.submit "Create Rental Request", class: "text-white bg-black hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 inline-block h-10"%>
+  <%end%>
+    </div>
+</main>
