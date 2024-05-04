@@ -21,6 +21,8 @@ class User < ApplicationRecord
         foreign_key: :user_id,
         class_name: :Session
 
+    has_many :notes
+
     attr_reader :password
 
     attr_reader :password
@@ -53,6 +55,10 @@ class User < ApplicationRecord
     #This method will check the password
     def is_password?(password)
         BCrypt::Password.new(self.password_digest).is_password?(password)
+    end
+
+    def admin?
+        self.admin
     end
 
     private

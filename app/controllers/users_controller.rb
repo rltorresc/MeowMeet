@@ -1,6 +1,12 @@
 class UsersController < ApplicationController
     before_action :logged_in?, only: [:new, :create]
     before_action :logged?, only: [:show]
+    before_action :check_admin, only: [:index]
+
+    def index
+        @users = User.all
+    end
+
     def new
         @user = User.new
     end
@@ -17,7 +23,15 @@ class UsersController < ApplicationController
 
     def show
         @sessions = Session.where(user_id: current_user.id)
+        @users = User.all
         render :show
+    end
+
+    def make_admin
+        @user = User.find(params[:id])
+        @user.admin = true
+        @user.save
+        redirect_to users_url
     end
 
     private

@@ -21,6 +21,8 @@ class Cat < ApplicationRecord
         foreign_key: :user_id,
         primary_key: :id,
         required: true
+    
+    has_many :notes, dependent: :destroy
 
     def birth_date_cannot_be_future
         return unless birth_date.present? && birth_date > Date.today

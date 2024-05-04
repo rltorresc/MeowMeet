@@ -5,11 +5,16 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   delete "/sessions.:session_id", to: "sessions#destroy_remote"
   resources :sessions, only: [:new, :create, :destroy]
-  resources :users, only: [:new , :create, :show]
+  resources :users, only: [:new , :create, :show] do
+    member do
+      patch :make_admin
+    end
+  end
   # Defines the root path route ("/")
   # root "posts#index"
   resources :cats, except:[:destroy] do
     resources :cat_rental_requests, only: [:new]
+    resources :notes, only: [:new]
   end
   resources :cat_rental_requests, only: [:new, :create] do
     member do
@@ -17,4 +22,5 @@ Rails.application.routes.draw do
       post 'deny'
     end
   end
+  resources :notes, only: [:create, :show, :edit, :update, :destroy]
 end

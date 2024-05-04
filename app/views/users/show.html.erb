@@ -20,4 +20,31 @@
             
         </table>
     </div>
+    <% if current_user.admin? %>
+        <table class="w-full text-sm text-left rtl:text-right text-gray-700 border-solid border-2 border-black mt-4">
+            <thead class="text-xs text-gray-800 uppercase bg-orange-100">
+            <tr class="border-b border-black">
+                <th class="px-6 py-3">Name</th>
+                <th class="px-6 py-3">Admin</th>
+                <th class="px-6 py-3">Actions</th>
+            </tr>
+            </thead>
+            <% @users.each do |user| %>
+                <tr class="bg-orange-100 border-b border-gray-700">
+                    <td class="px-6 py-3">
+                        <h2><%= user.user_name %></h2>
+                    </td>
+                    <td class="px-6 py-3">
+                        <h2><%= user.admin %></h2>
+                    </td>
+                    <td class="px-6 py-3">
+                        <%if user.admin == false %>
+                        <%= link_to "Make admin", make_admin_user_path(user), data: {"turbo-method": :patch} , class: "text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" %>
+                        <%end%>
+                    </td>
+
+                </tr>
+            <% end %>
+        </table>
+    <% end %>
 </main>

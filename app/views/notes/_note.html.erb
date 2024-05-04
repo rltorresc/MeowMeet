@@ -1,0 +1,21 @@
+<%= auth_token %>
+<input type="hidden" name="note[cat_id]" value="<%= @cat.id %>">
+<textarea name="note[notes]" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"></textarea>
+<input type="submit" class="cursor-pointer text-white bg-black hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-2 inline-block" value="Create Comment">
+
+<%# Check if there is a comment for this cat on database: %>
+<% if @cat.notes.any? %>
+    <h2 class="block mb-2 text-xl font-medium text-gray-900 mt-4">Comments</h2>
+        <% @cat.notes.each do |note| %>
+            <p>
+                <%= note.notes %>
+                <p class="italic mt-2 font-semibold">Authored by: <%= note.user.user_name %></p>
+                <% if note.user_id == current_user.id || current_user.admin? %>
+                    <%= link_to "Delete", note_path(note.id), data: {"turbo-method": :delete} , class: "text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-2 inline-block" %>
+                <% end %>
+                <br>
+                <br>
+                <hr class="mb-4">
+            </p>
+        <% end %>
+<% end %>

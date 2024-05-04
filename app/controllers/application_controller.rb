@@ -9,7 +9,7 @@ def login!(user)
     device = device_info
     Session.create(user_id: @user.id, session_token: session_token, device: device)
     session[:session_token] = session_token
-    redirect_to user_url(@user)
+    redirect_to root_url
 end
 
 # Metodo para cerrar sesion
@@ -47,7 +47,13 @@ end
 def check_owner
     @cat = Cat.find(params[:id])
     
-    unless @cat.user_id == current_user.id 
+    unless @cat.user_id == current_user.id || current_user.admin?
         redirect_to cat_url(@cat), flash: { alert:  "You are not the owner of this cat" }
+    end
+end
+
+def check_admin
+    unless current_user.admin?
+        redirect_to bands_url, flash: { alert: "You are not an admin!"}
     end
 end
