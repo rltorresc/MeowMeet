@@ -54,6 +54,6 @@ end
 
 def check_admin
     unless current_user.admin?
-        redirect_to bands_url, flash: { alert: "You are not an admin!"}
+        redirect_to cat_url, flash: { alert: "You are not an admin!"}
     end
 end
