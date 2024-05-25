@@ -1,0 +1,56 @@
+Vagrant.configure("2") do |config|
+    config.vm.box = "ubuntu/bionic64"  # Puedes cambiar a otra versión de Ubuntu si prefieres
+  
+    # Configurar redirección de puertos
+    config.vm.network "forwarded_port", guest: 3000, host: 3000
+  
+    # Configuración del proveedor
+    config.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"
+      vb.cpus = 2
+    end
+  
+    # Configuración SSH
+    config.ssh.username = "vagrant"
+    config.ssh.insert_key = true
+  
+    # Script de aprovisionamiento
+    config.vm.provision "shell", inline: <<-SHELL
+      # Actualizar e instalar dependencias
+      apt-get update
+      apt-get install -y build-essential libssl-dev libreadline-dev zlib1g-dev curl gpg postgresql postgresql-contrib libpq-dev nodejs yarn
+  
+      # Instalar RVM, Ruby y Bundler
+      curl -sSL https://rvm.io/mpapis.asc | gpg --import -
+      curl -sSL https://rvm.io/pkuczynski.asc | gpg --import -
+      curl -sSL https://get.rvm.io | bash -s stable
+      source /etc/profile.d/rvm.sh
+      rvm install 3.3.0  # Usar Ruby 3.3.0
+      rvm use 3.3.0 --default
+      gem install bundler
+  
+      # Configurar PostgreSQL
+      sudo -u postgres createuser -s vagrant
+      sudo -u postgres createdb vagrant_dev
+  
+      # Instalar Yarn
+      curl -sL https://deb.nodesource.com/setup_14.x | bash -
+      apt-get install -y yarn
+  
+      # Clonar el repositorio y configurar la aplicación
+      cd /vagrant
+      bundle install
+  
+      # Instalar Tailwind CSS
+      yarn add tailwindcss postcss autoprefixer
+  
+      # Configurar la base de datos
+      rake db:create
+      rake db:migrate
+  
+      # Precompilar assets
+      rake assets:precompile
+    SHELL
+  end
+  
+  
